@@ -1,7 +1,35 @@
+<?php
+session_start();
+
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['email'])) {
+    // Pengguna belum login, redirect ke halaman login
+    header("Location: login.php");
+    exit();
+}
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "latihan_18_php";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $database);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Query data from the "users" table
+$sql = "SELECT id, avatar, name, email, phone, role FROM users";
+$result = mysqli_query($conn, $sql);
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Display</title>
+    <title>Data Pengguna</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/1babd9929f.js" crossorigin="anonymous"></script>
 </head>
@@ -9,24 +37,6 @@
     <h2>Data Pengguna</h2>
     <div class="container">
         <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $database = "latihan_18_php";
-
-        // Create connection
-        $conn = mysqli_connect($servername, $username, $password, $database);
-
-        // Check connection
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
-        // echo "Connected successfully";
-
-        // Query data from the "users" table
-        $sql = "SELECT id, avatar, name, email, phone, role FROM users";
-        $result = mysqli_query($conn, $sql);
-
         // Check if there are any rows returned
         if (mysqli_num_rows($result) > 0) {
             // Start creating the table
@@ -61,7 +71,6 @@
                 echo '<td>' . $row['role'] . '</td>';
                 echo '</tr>';
 
-
                 // Inkremen nomor
                 $nomor++;
             }
@@ -73,6 +82,9 @@
             echo "No data found.";
         }
 
+        // Tombol Logout
+        echo '<a href="logout.php" class="btn btn-danger">Logout</a>';
+        
         // Close the database connection
         mysqli_close($conn);
         ?>

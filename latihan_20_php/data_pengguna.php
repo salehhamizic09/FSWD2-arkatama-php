@@ -64,7 +64,7 @@ $result = mysqli_query($conn, $sql);
                 echo '<td><button class="btn btn-primary btn-sm">Detail</button> 
                      <a href="edit_pengguna.php?id=' . $row['id'] . '" class="btn btn-warning btn-sm">Edit</a>
                      <button class="btn btn-danger btn-sm">Hapus</button></td>';
-                echo '<td><img src="' . $row['avatar'] . '" alt="Avatar" class="img-thumbnail" style="width: 50px;"></td>';
+                echo '<td><img src="foto/' . $row['avatar'] . '" alt="Avatar" class="img-thumbnail" style="width: 50px;"></td>';
                 echo '<td>' . $row['name'] . '</td>';
                 echo '<td>' . $row['email'] . '</td>';
                 echo '<td>' . $row['phone'] . '</td>';
